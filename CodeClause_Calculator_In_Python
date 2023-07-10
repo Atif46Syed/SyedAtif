@@ -1,0 +1,50 @@
+from tkinter import Tk, Entry, Button
+
+def calculate():
+    try:
+        result = eval(entry.get())
+        entry.delete(0, 'end')
+        entry.insert('end', str(result))
+    except Exception:
+        entry.delete(0, 'end')
+        entry.insert('end', "Error")
+
+def clear():
+    entry.delete(0, 'end')
+
+def button_click(number):
+    current = entry.get()
+    entry.delete(0, 'end')
+    entry.insert('end', current + str(number))
+
+# Create the main window
+window = Tk()
+window.title("Calculator")
+
+# Create the input entry field
+entry = Entry(window, width=20, justify='right')
+entry.grid(row=0, column=0, columnspan=4)
+
+# Create the number buttons
+buttons = [
+    '7', '8', '9', '/',
+    '4', '5', '6', '*',
+    '1', '2', '3', '-',
+    '0', '.', '=', '+'
+]
+
+row = 1
+col = 0
+for button in buttons:
+    Button(window, text=button, width=5, command=lambda button=button: button_click(button)).grid(row=row, column=col)
+    col += 1
+    if col > 3:
+        col = 0
+        row += 1
+
+# Create the clear and calculate buttons
+Button(window, text='C', width=5, command=clear).grid(row=row, column=0)
+Button(window, text='=', width=5, command=calculate).grid(row=row, column=1)
+
+# Run the main event loop
+window.mainloop()
